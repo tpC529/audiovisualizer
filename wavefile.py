@@ -1,4 +1,5 @@
 import sys
+import os
 import numpy as np
 import librosa
 import matplotlib.pyplot as plt
@@ -6,10 +7,10 @@ from PIL import Image
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton, QSlider,
                              QFileDialog, QVBoxLayout, QWidget, QLabel, QHBoxLayout,
-                             QFrame, QProgressBar, QStackedWidget)
-from PyQt6.QtGui import QAction, QFont, QIcon
+                             QFrame)
+from PyQt6.QtGui import QAction
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
-from PyQt6.QtCore import QUrl, Qt, QTimer, QSize
+from PyQt6.QtCore import QUrl, Qt, QTimer
 from moviepy import AudioFileClip, VideoClip
 
 
@@ -236,7 +237,7 @@ class ModernUploadWizard(QWidget):
         self.sr = sr
         
         # Update UI
-        filename = path.split('/')[-1]
+        filename = os.path.basename(path)
         self.audio_status.setText(f"✓ {filename}")
         self.audio_status.setStyleSheet("color: #4ade80; font-weight: bold;")
         self.overall_status.setText("Audio file loaded successfully! Now upload an image or continue.")
@@ -266,7 +267,7 @@ class ModernUploadWizard(QWidget):
             img.verify()
             self.image_path = path
             
-            filename = path.split('/')[-1]
+            filename = os.path.basename(path)
             self.image_status.setText(f"✓ {filename}")
             self.image_status.setStyleSheet("color: #4ade80; font-weight: bold;")
             self.overall_status.setText("All files uploaded! Click Continue to start visualizing.")
@@ -515,7 +516,7 @@ class CenteredScrollingPlayer(QMainWindow):
         self.slider.setMaximum(duration_ms)
         self.slider.setValue(0)
         self.player.setPosition(0)
-        filename = path.split('/')[-1]
+        filename = os.path.basename(path)
         self.status.setText(f"✓ Loaded: {filename}")
         self.status.setStyleSheet("color: #4ade80; font-weight: 500;")
         self.update_plot(0)
@@ -530,7 +531,7 @@ class CenteredScrollingPlayer(QMainWindow):
             return
         try:
             self.apply_theme_from_image(path)
-            filename = path.split('/')[-1]
+            filename = os.path.basename(path)
             self.status.setText(f"✓ Image applied: {filename}")
             self.status.setStyleSheet("color: #4ade80; font-weight: 500;")
         except Exception as e:
@@ -734,7 +735,7 @@ class CenteredScrollingPlayer(QMainWindow):
         video = video.set_audio(audio)
         video.write_videofile(out_path, fps=30, codec='libx264', audio_codec='aac')
         
-        filename = out_path.split('/')[-1]
+        filename = os.path.basename(out_path)
         self.status.setText(f"✓ Exported: {filename}")
         self.status.setStyleSheet("color: #4ade80; font-weight: 500;")
 
@@ -756,7 +757,7 @@ if __name__ == '__main__':
     if wizard.image_path:
         try:
             win.apply_theme_from_image(wizard.image_path)
-            filename = wizard.image_path.split('/')[-1]
+            filename = os.path.basename(wizard.image_path)
             win.status.setText(f"✓ Ready to play - Image: {filename}")
             win.status.setStyleSheet("color: #4ade80; font-weight: 500;")
         except Exception as e:
