@@ -1,82 +1,12 @@
-# 🎵 Audio Visualizer - Web Edition
+NuWave Video Generator that lets you create videos from an audio file and a cover image. It's designed for quick processing, especially for longer audio files.
 
-A modern, web-based audio visualizer built with NiceGUI that creates stunning waveform visualizations with optional background images.
+Here's a quick rundown of what it does:
 
-## ✨ Features
-
-- **Web Upload Interface**: Drag-and-drop or click to upload audio and image files
-- **Beautiful UI**: Gradient backgrounds, modern colors, and smooth animations
-- **Audio Support**: Works with MP3, WAV, M4A, FLAC, OGG, AAC and more
-- **Image Themes**: Apply background images that influence the waveform colors
-- **Real-time Playback**: Watch the waveform scroll as your audio plays
-- **Video Export**: Export your visualization as an MP4 video file
-- **Seamless Workflow**: Upload files and start visualizing immediately
-
-## 📋 Requirements
-
-- Python 3.8+
-- nicegui
-- numpy
-- librosa
-- matplotlib
-- Pillow
-- moviepy
-
-## 🚀 Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/your-repo/audiovisualizer.git
-cd audiovisualizer
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-## 🎮 Usage
-
-1. Run the web server:
-```bash
-python wavefile.py
-```
-
-2. Open your browser to http://localhost:8080
-
-3. Upload your files:
-   - **Upload Audio**: Select an audio file (MP3, WAV, M4A, etc.)
-   - **Upload Image**: Optionally select an image for background theme
-
-4. Control playback:
-   - **▶️ Play / Pause**: Control audio playback
-   - **🎬 Export Video**: Save your visualization as an MP4 file
-   - **Slider**: Seek through the audio
-
-## 🎨 Modern Design Features
-
-- Gradient backgrounds with smooth color transitions
-- Cyan waveform that adapts to image colors
-- Modern rounded buttons with hover effects
-- Clean, minimalist interface
-- Real-time status updates
-- Responsive web layout
-
-## 🌐 Web Deployment Ready
-
-The application runs as a web server and can be deployed to any platform supporting Python.
-
-## 📝 Notes
-
-- Audio processing supports various formats through librosa and moviepy
-- Images can be PNG, JPEG, or BMP format
-- Video export may take a few minutes depending on audio length
-- The waveform color is influenced by the dominant color in your background image
-
-## 🤝 Contributing
-
-Feel free to open issues or submit pull requests for improvements!
-
-## 📄 License
-
-MIT License - Feel free to use and modify for your projects.
+Input: You provide an audio file (MP3, WAV, FLAC, M4A, etc.) and a cover image (JPG, PNG).
+Video Generation:
+It uses FFmpeg to render a scrolling audio waveform directly from your audio and composites it over a background.
+Optionally, if your system has CUDA and the necessary libraries (like diffusers for LTX-Video AI), it can generate an AI-animated background video from your image. Otherwise, it uses a static image background.
+The colors and theme for the video are automatically derived from your cover image.
+User Interface: It uses Gradio to provide a web-based interface where you can upload your files, generate the video, and download the final MP4. It also displays system info like RAM, CPU, and GPU usage.
+Performance: A key feature is its optimized workflow that renders the waveform entirely within FFmpeg, making it much faster than traditional Python-based frame-by-frame rendering.
+Essentially, it's a tool to easily create visually engaging audio-reactive videos, perfect for sharing music or podcasts with a dynamic visual element.
